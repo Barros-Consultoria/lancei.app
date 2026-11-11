@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>LanceiApp</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F2F3F7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Lancei">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="robots" content="noindex">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#14213D;--navy:#1F3864;--bg:#F2F3F7;--card:#fff;--mut:#5B667A;--linha:#E6E9F0;--teal:#00897B;--menta:#4FD8B5;--pos:#2E7D32;--neg:#C62828;--azul:#1565C0;--amb:#8A5A00;--ambBg:#FFF3D6}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-text-size-adjust:100%}
+body{min-height:100vh;min-height:100dvh;padding:calc(env(safe-area-inset-top) + 14px) 16px calc(env(safe-area-inset-bottom) + 28px)}
+.wrap{max-width:560px;margin:0 auto}
+.hidden{display:none!important}
+header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.wm{font-weight:800;font-size:26px;letter-spacing:-1px;color:var(--navy);line-height:1}
+.pill{font-size:10px;font-weight:800;letter-spacing:.5px;color:#fff;background:var(--teal);border-radius:6px;padding:2px 6px;margin-left:3px;vertical-align:4px}
+.mes{font-size:13px;font-weight:600;color:var(--mut);margin-top:3px}
+.grow{flex:1;min-width:0}
+.ib{width:44px;height:44px;border-radius:50%;border:0;background:var(--card);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 1px 2px rgba(20,33,61,.06)}
+.ib svg{width:20px;height:20px}
+.ib.gira svg{animation:g .8s linear infinite}
+@keyframes g{to{transform:rotate(360deg)}}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi{background:var(--card);border-radius:20px;padding:14px 14px 13px;min-width:0}
+.kpi .t{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--mut)}
+.kpi .v{font-size:21px;font-weight:800;letter-spacing:-.5px;margin-top:5px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi .s{font-size:12px;color:var(--mut);margin-top:3px;font-weight:500}
+.pos{color:var(--pos)}.neg{color:var(--neg)}.azul{color:var(--azul)}
+.aviso{border-radius:16px;padding:12px 14px;font-size:13.5px;line-height:1.45;margin-top:10px;font-weight:500}
+.aviso.ok{background:#E6F4EA;color:#1B5E20}
+.aviso.cap{background:#FDECEC;color:#8E1B1B}
+.aviso.venc{background:var(--ambBg);color:var(--amb)}
+.aviso b{font-weight:800}
+.card{background:var(--card);border-radius:20px;padding:16px;margin-top:10px}
+.card h2{font-size:15px;font-weight:800;margin:0 0 4px;display:flex;justify-content:space-between;align-items:baseline}
+.card h2 small{font-size:12px;font-weight:600;color:var(--mut)}
+.item{display:flex;gap:10px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--linha)}
+.item:first-of-type{border-top:0}
+.item .d{flex:1;min-width:0;font-size:14px;line-height:1.35}
+.item .d b{font-weight:800}
+.item .d .c{color:var(--mut);font-size:12.5px;font-weight:500;margin-top:2px}
+.item .d .f{color:var(--mut);font-size:12px;margin-top:2px}
+.item .val{font-weight:800;font-size:14.5px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-size:11px;font-weight:700;border-radius:20px;padding:2px 8px;margin-left:4px;background:#EEF0F5;color:#3A4660}
+.tag.breve{background:var(--ambBg);color:var(--amb)}.tag.venc{background:#FDECEC;color:#8E1B1B}
+.vazio{color:var(--mut);font-size:14px;padding:10px 0 2px}
+.estado{font-size:12.5px;color:var(--mut);text-align:center;margin-top:16px;line-height:1.6;font-weight:500}
+.estado b{color:var(--ink);font-weight:700}
+.estado .off{color:var(--amb);font-weight:700}
+.teste{margin-top:10px;border:1px dashed #C3CAD9;border-radius:16px;padding:12px 14px;font-size:12.5px;line-height:1.5;color:var(--mut)}
+.teste b{color:var(--ink)}
+.linkb{background:none;border:0;color:var(--azul);font:inherit;font-weight:700;padding:8px 4px;cursor:pointer}
+/* conexão */
+.setup{background:var(--card);border-radius:20px;padding:22px 18px;margin-top:24px}
+.setup h1{font-size:20px;margin:0 0 8px;font-weight:800}
+.setup p{font-size:14.5px;line-height:1.5;color:#4A5670;margin:0 0 12px}
+.setup ol{font-size:14.5px;line-height:1.55;color:#4A5670;padding-left:20px;margin:0 0 14px}
+.setup textarea{width:100%;min-height:92px;border:1.5px solid #CFD5E2;border-radius:14px;padding:12px;font:inherit;font-size:16px;color:var(--ink);background:#FAFBFD;resize:vertical}
+.setup textarea:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal)}
+.btn{display:block;width:100%;border:0;border-radius:14px;background:var(--teal);color:#fff;font:inherit;font-weight:800;font-size:16px;padding:14px;margin-top:12px;cursor:pointer}
+.erro{color:var(--neg);font-size:13.5px;font-weight:600;margin-top:10px;min-height:18px}
+.esq{height:88px;border-radius:20px;background:linear-gradient(90deg,#E9ECF2 25%,#F4F6FA 50%,#E9ECF2 75%);background-size:200% 100%;animation:sk 1.2s linear infinite}
+@keyframes sk{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.esq,.ib.gira svg{animation:none}}
+@media (min-width:700px){.kpis{grid-template-columns:repeat(4,1fr)}.wrap{max-width:900px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <svg width="40" height="40" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#1F3864"/><rect x="51" y="56" width="18" height="42" rx="9" fill="#fff"/><circle cx="60" cy="33" r="16" fill="#4FD8B5"/><path d="M52.5 33.5 L57.5 38.5 L67.5 27.5" fill="none" stroke="#1F3864" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="grow"><div class="wm">lancei<span class="pill">app</span></div><div class="mes" id="mes">&nbsp;</div></div>
+    <button class="ib hidden" id="btnAtu" aria-label="Atualizar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 4v5h-5"/></svg></button>
+  </header>
+
+  <!-- conectar o aparelho -->
+  <section class="setup hidden" id="setup">
+    <h1>Conectar este aparelho</h1>
+    <p>Este aparelho ainda não está conectado aos seus dados.</p>
+    <ol>
+      <li>Abra o LanceiApp atual e entre em <b>Conectar este aparelho</b>.</li>
+      <li>Toque em <b>Copiar código de conexão</b>.</li>
+      <li>Volte aqui, cole o código e toque em Conectar.</li>
+    </ol>
+    <textarea id="cod" placeholder="Cole aqui o código de conexão" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Código de conexão"></textarea>
+    <button class="btn" id="btnCon">Conectar</button>
+    <div class="erro" id="erroCon" role="alert"></div>
+  </section>
+
+  <!-- início -->
+  <main class="hidden" id="app">
+    <div id="conteudo"></div>
+    <div class="estado" id="estado"></div>
+    <div class="teste"><b>Versão de teste.</b> Só a tela Início, somente leitura. Para lançar, dar baixa e as demais telas, continue usando o LanceiApp atual.
+      <div><button class="linkb" id="btnDes">Desconectar este aparelho</button></div></div>
+  </main>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var T0 = performance.now();
+  var CH_CON = 'lancei_con', CH_DADOS = 'lancei_inicio';
+  var DEMO = /[?&]demo=1/.test(location.search);
+  var $ = function (id) { return document.getElementById(id); };
+  function ler(k) { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } }
+  function gravar(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* sem armazenamento */ } }
+  function apagar(k) { try { localStorage.removeItem(k); } catch (e) { /* ok */ } }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function brl(v) { return (Number(v) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+  function dbr(iso) { var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || ''); return m ? m[3] + '/' + m[2] : ''; }
+  function pct(v) { return ((Number(v) || 0) * 100).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + '%'; }
+  function cls(v) { return v < 0 ? 'neg' : 'pos'; }
+
+  /* ---- conexão: código = base64url({u: endereço do servidor, k: chave}) ---- */
+  function decodificar(txt) {
+    try {
+      var c = String(txt || '').trim().replace(/^.*#c=/, '').replace(/\s+/g, '');
+      var o = JSON.parse(decodeURIComponent(escape(atob(c.replace(/-/g, '+').replace(/_/g, '/')))));
+      if (o && /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(o.u) && /^[0-9a-f]{32,128}$/i.test(o.k)) return { u: o.u, k: o.k };
+    } catch (e) { /* inválido */ }
+    return null;
+  }
+  var con = ler(CH_CON);
+  var doLink = /#c=/.test(location.hash) ? decodificar(location.hash) : null;
+  if (doLink) { con = doLink; gravar(CH_CON, con); }
+  // o código fica no endereço de propósito: o iPhone guarda este endereço ao "Adicionar à Tela de Início"
+
+  function chamar(fn) {
+    if (DEMO) return new Promise(function (ok) { setTimeout(function () { ok({ ok: true, dados: demo(), ms: 320 }); }, 500); });
+    return fetch(con.u, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ k: con.k, fn: fn }), redirect: 'follow', cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+  }
+
+  /* ---- tela ---- */
+  function desenhar(d) {
+    var r = d.resumo, k = r.kpi, h = '';
+    $('mes').textContent = r.mes + ' de ' + r.ano;
+    h += '<div class="kpis">' +
+      '<div class="kpi"><div class="t">Receitas</div><div class="v pos">' + brl(k.rec) + '</div><div class="s">a receber ' + brl(k.aReceber) + '</div></div>' +
+      '<div class="kpi"><div class="t">Despesas</div><div class="v neg">' + brl(k.des) + '</div><div class="s">a pagar ' + brl(k.aPagar) + '</div></div>' +
+      '<div class="kpi"><div class="t">Resultado</div><div class="v ' + (k.res < 0 ? 'azul' : 'pos') + '">' + brl(k.res) + '</div><div class="s">margem ' + pct(k.marg) + '</div></div>' +
+      '<div class="kpi"><div class="t">Saldo previsto</div><div class="v ' + cls(k.saldo) + '">' + brl(k.saldo) + '</div><div class="s">em conta hoje ' + brl(k.saldoHoje) + '</div></div></div>';
+    if (k.vencQ > 0) h += '<div class="aviso venc"><b>' + k.vencQ + ' conta(s) vencida(s).</b> A pagar ' + brl(k.vencP) + (k.vencR ? ' · a receber ' + brl(k.vencR) : '') + '</div>';
+    else h += '<div class="aviso ok"><b>Nenhuma conta vencida.</b> Tudo em dia.</div>';
+    if (k.cap > 0) h += '<div class="aviso cap"><b>Capitalização necessária: ' + brl(k.cap) + '</b><br>para fechar ' + esc(String(r.mes).toLowerCase()) + ' positivo (despesas ' + pct(k.comp) + ' da renda)' +
+      (k.capSaldo > 0 ? '<br>Aporte para o saldo acumulado não ficar negativo: ' + brl(k.capSaldo) : '') + '</div>';
+    h += '<div class="card"><h2>Próximos vencimentos <small>30 dias</small></h2>';
+    if (!r.proximos || !r.proximos.length) h += '<div class="vazio">Nada a vencer nos próximos 30 dias.</div>';
+    (r.proximos || []).forEach(function (p) {
+      var rec = p.tipo === 'Receita', sit = String(p.sit || '');
+      var tg = /Vencid/i.test(sit) ? 'venc' : (/hoje|em \d+ dia/i.test(sit) ? 'breve' : '');
+      h += '<div class="item"><div class="d"><b>' + dbr(p.venc) + '</b> · ' + esc(p.desc) +
+        (p.qtdCompras ? '<div class="f">provisão ' + brl(p.base) + ' + ' + p.qtdCompras + ' compra(s) ' + brl(p.somaCompras) + '</div>' : '') +
+        '<div class="c">' + esc(p.cat) + '<span class="tag ' + tg + '">' + esc(sit) + '</span></div></div>' +
+        '<div class="val ' + (rec ? 'pos' : 'neg') + '">' + (rec ? '+' : '−') + brl(p.total) + '</div></div>';
+    });
+    h += '</div>';
+    $('conteudo').innerHTML = h;
+  }
+  function esqueleto() {
+    $('conteudo').innerHTML = '<div class="kpis"><div class="esq"></div><div class="esq"></div><div class="esq"></div><div class="esq"></div></div><div class="esq" style="height:220px;margin-top:10px"></div>';
+  }
+  var tAbriu = null, tServ = null;
+  function estado(g, extra) {
+    var h = '';
+    if (g) {
+      var dt = new Date(g.t);
+      h += 'Atualizado em <b>' + dt.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) + ' às ' + dt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) + '</b>';
+    }
+    if (extra) h += (h ? '<br>' : '') + extra;
+    if (tAbriu != null) h += '<br>Tela pronta em ' + Math.round(tAbriu) + ' ms' + (tServ != null ? ' · servidor respondeu em ' + (tServ / 1000).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' s' : '');
+    $('estado').innerHTML = h;
+  }
+  function atualizar() {
+    var b = $('btnAtu'); b.classList.add('gira'); b.disabled = true;
+    var t = performance.now();
+    return chamar('inicio').then(function (r) {
+      if (!r || !r.ok) throw new Error(r && r.erro || 'erro');
+      tServ = performance.now() - t;
+      var g = { t: Date.now(), d: r.dados };
+      if (!DEMO) gravar(CH_DADOS, g);
+      desenhar(r.dados);
+      if (tAbriu == null) tAbriu = performance.now() - T0;
+      estado(g);
+    }).catch(function (e) {
+      var g = ler(CH_DADOS), m = String(e && e.message || '');
+      if (m === 'chave') { apagar(CH_CON); apagar(CH_DADOS); con = null; mostrarSetup('O código de conexão não é mais válido. Conecte de novo.'); return; }
+      var msg = m === 'bloqueado' ? 'Servidor em pausa por tentativas inválidas. Tente em 10 minutos.' : (navigator.onLine === false ? 'Sem internet.' : 'Não foi possível falar com o servidor.');
+      if (!g) $('conteudo').innerHTML = '<div class="card"><div class="vazio">' + msg + ' Toque em atualizar para tentar de novo.</div></div>';
+      estado(g, '<span class="off">' + msg + (g ? ' Mostrando os dados guardados.' : '') + '</span>');
+    }).then(function () { b.classList.remove('gira'); b.disabled = false; });
+  }
+  function mostrarSetup(msg) {
+    $('app').classList.add('hidden'); $('btnAtu').classList.add('hidden'); $('setup').classList.remove('hidden');
+    $('mes').textContent = 'Lancei Finanças';
+    $('erroCon').textContent = msg || '';
+  }
+  function iniciar() {
+    $('setup').classList.add('hidden'); $('app').classList.remove('hidden'); $('btnAtu').classList.remove('hidden');
+    var g = DEMO ? null : ler(CH_DADOS);
+    if (g && g.d) { desenhar(g.d); tAbriu = performance.now() - T0; estado(g, 'Buscando dados novos…'); }
+    else esqueleto();
+    atualizar();
+  }
+  $('btnAtu').onclick = atualizar;
+  $('btnCon').onclick = function () {
+    var c = decodificar($('cod').value);
+    if (!c) { $('erroCon').textContent = 'Código inválido. Copie de novo em "Conectar este aparelho".'; return; }
+    con = c; gravar(CH_CON, c); $('cod').value = ''; iniciar();
+  };
+  $('btnDes').onclick = function () {
+    apagar(CH_CON); apagar(CH_DADOS); con = null;
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* ok */ }
+    mostrarSetup('');
+  };
+  document.addEventListener('visibilitychange', function () {
+    var g = ler(CH_DADOS);
+    if (!document.hidden && con && (!g || Date.now() - g.t > 60000)) atualizar();   // voltou ao app: busca dados novos
+  });
+
+  function demo() {   // dados fictícios (endereço com ?demo=1), só para ver a tela sem conexão
+    return { resumo: { mes: 'Novembro', ano: 2026, kpi: { rec: 8200, des: 6150.4, res: 2049.6, marg: .25, comp: .75, saldo: 3120.75, aPagar: 2890.1, aReceber: 1500, saldoHoje: 4510.85, cap: 0, capSaldo: 0, vencQ: 0, vencP: 0, vencR: 0 },
+      proximos: [{ venc: '2026-11-12', desc: 'EXEMPLO · ALUGUEL', cat: 'Moradia', tipo: 'Despesa', total: 1800, sit: 'Vence em 2 dias' },
+        { venc: '2026-11-15', desc: 'EXEMPLO · HONORÁRIOS', cat: 'Prestação de Serviços', tipo: 'Receita', total: 1500, sit: 'A vencer' },
+        { venc: '2026-11-20', desc: 'FATURA-EXEMPLO', cat: 'Cartões de Crédito', tipo: 'Despesa', total: 1090.1, sit: 'A vencer', base: 900, qtdCompras: 3, somaCompras: 190.1 }] } };
+  }
+
+  if (DEMO || con) iniciar(); else mostrarSetup('');
+  if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(function () { /* sem cache offline */ });
+})();
+</script>
+</body>
+</html>
